@@ -75,6 +75,8 @@ mb_register_area_descriptor_t reg_area = {0}; // Modbus register area descriptor
 
 static void *mbc_slave_handle = NULL;
 
+static portMUX_TYPE param_lock = portMUX_INITIALIZER_UNLOCKED;
+
 
 static void  modbus_init(){
 

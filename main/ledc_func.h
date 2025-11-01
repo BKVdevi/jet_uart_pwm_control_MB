@@ -1,16 +1,17 @@
 #include <stdio.h>
 #include "driver/ledc.h"
+#include "driver/gpio.h"
 #include "esp_log.h"
 
 
 // ===================== LEDC CONFIGURATION =====================
 
-#define LEDC_TIMER         LEDC_TIMER_1
+#define LEDC_TIMER         LEDC_TIMER_0
 #define LEDC_MODE          LEDC_LOW_SPEED_MODE
-#define LEDC_CHANNEL       LEDC_CHANNEL_1
+#define LEDC_CHANNEL       LEDC_CHANNEL_0
 #define LEDC_DUTY_RES      LEDC_TIMER_16_BIT
 #define LEDC_FREQUENCY     50              // 50 Hz (20ms период)
-#define LEDC_GPIO_PIN      GPIO_NUM_15    // D15 пин
+#define LEDC_GPIO_PIN      GPIO_NUM_5
 
 // PWM диапазон: 1000-2000 мс (в пределах 20ms периода)
 #define MIN_PULSE_MS       1000   // Минимальный импульс в микросекундах
@@ -45,6 +46,8 @@ void ledc_pwm_init(void)
     };
     
     ESP_ERROR_CHECK(ledc_channel_config(&ledc_channel));
+    
+
 }
 
 // ===================== ФУНКЦИЯ КОНВЕРТАЦИИ И ВЫВОДА =====================
@@ -60,7 +63,7 @@ void ledc_pwm_init(void)
  * 
  * Параметр: value (-100 до +100)
  */
-void set_pwm_percent(int16_t value)
+static void set_pwm_percent(int16_t value)
 {
     // Валидация диапазона
     if (value < -100) value = -100;
