@@ -5,7 +5,7 @@
 
 #define MB_PORT_NUM UART_NUM_0
 #define MB_SLAVE_ADDR 0x01
-#define MB_DEV_SPEED 512000
+#define MB_DEV_SPEED 115200 //512000
 
 /*
 Определяем 16 каналов для данных получаемых по modbus
@@ -78,7 +78,7 @@ static void *mbc_slave_handle = NULL;
 static portMUX_TYPE param_lock = portMUX_INITIALIZER_UNLOCKED;
 
 
-static void  modbus_init(){
+static void modbus_init(){
 
     mb_communication_info_t comm_config = {
         .ser_opts.port = MB_PORT_NUM,
@@ -92,7 +92,7 @@ static void  modbus_init(){
     };
 
     ESP_ERROR_CHECK(mbc_slave_create_serial(&comm_config, &mbc_slave_handle));
-    uart_driver_install(comm_config.ser_opts.port, 4096*2, 4096*2, 0, NULL, 0);
+    // uart_driver_install(comm_config.ser_opts.port, 4096*2, 4096*2, 0, NULL, 0);
     // uart_set_pin(MB_PORT_NUM, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
 
     //Инициализация пространства регисторв MODBUS
